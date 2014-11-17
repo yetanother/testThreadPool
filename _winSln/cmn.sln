@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "calcCore", "..\calcCore\calcCore.vcxproj", "{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_testProj", "..\_testProj\_testProj.vcxproj", "{49809B75-F589-34FB-BF63-853C9AE481EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5} = {A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}.Debug|Win32.Build.0 = Debug|Win32
+		{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}.Release|Win32.ActiveCfg = Release|Win32
+		{A9ECCF4F-F8F2-349E-8A0D-D519F9E50BC5}.Release|Win32.Build.0 = Release|Win32
+		{49809B75-F589-34FB-BF63-853C9AE481EB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{49809B75-F589-34FB-BF63-853C9AE481EB}.Debug|Win32.Build.0 = Debug|Win32
+		{49809B75-F589-34FB-BF63-853C9AE481EB}.Release|Win32.ActiveCfg = Release|Win32
+		{49809B75-F589-34FB-BF63-853C9AE481EB}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
