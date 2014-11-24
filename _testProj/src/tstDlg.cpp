@@ -13,6 +13,8 @@ dlgTest::dlgTest(QWidget * parent, Qt::WindowFlags f /*= 0*/)
 {
 	Q_UNUSED(f);
 	//
+	qthread_ = new QThread(this);
+	//
 	init();
 }
 
@@ -34,13 +36,13 @@ void dlgTest::init()
 		validator_->setDecimals(decs);
 	}
 	//
-	dlgTest::setValidator(validator_, ui.wgtBegin);
-	dlgTest::setValidator(validator_, ui.wgtEnd);
-	dlgTest::setValidator(validator_, ui.wgtStep);
+	//dlgTest::setValidator(validator_, ui.wgtBegin);
+	//dlgTest::setValidator(validator_, ui.wgtEnd);
+	//dlgTest::setValidator(validator_, ui.wgtStep);
 	//
 	dlgTest::setValue(0, ui.wgtBegin);
-	dlgTest::setValue(3.1415926, ui.wgtEnd);
-	dlgTest::setValue(0.01, ui.wgtStep);
+	dlgTest::setValue(1/*3.1415926*/, ui.wgtEnd);
+	dlgTest::setValue(1, ui.wgtStep);
 }
 
 void dlgTest::setValidator(QValidator *validator, QLineEdit* wgt)
@@ -79,7 +81,6 @@ void dlgTest::slStart()
 		} 
 		else
 		{
-			
 			if (!isCorrectCountThread)
 			{
 				auxDlg::MsgBox(this, "caption", tr("ошибка в количестве потоков"));
@@ -93,13 +94,21 @@ void dlgTest::slStart()
 			QString outStr("~in process~");
 			ui.wgtOutput->setText(outStr);
 		}
-		//
-		std::function<void(double)> pf = [this](double val)
+		std::function<void(double)> pf0 = [this](double val)
 		{
-			this->hasAResult(val);
+			emit sigHasResult(val);
 		};
 		//
-		/*opDouble res = */solver_->doCalc(pf);
+		std::function<void(double)> pf = [this, pf0](double val)
+		{
+			solver_->doCalc(pf0);
+			//this->hasAResult(val);
+		};
+		//qt
+		//
+		//solver_->doCalc(pf);
+		//qApp->processEvents(QEventLoop::AllEvents, 0)
+		auxDlg::MsgBox(this, "doCalc", "doCalc");
 	}
 }
 
@@ -129,6 +138,15 @@ void dlgTest::initConnection()
 			SIGNAL(sigHasResult(double)),
 			this,
 			SLOT(slHasResult(double))
+			);
+		Q_ASSERT_X(res, "dlgTest::initConnection", "issue connection with");
+	}
+	{
+		bool res = QObject::connect(
+			ui.btnStop,
+			SIGNAL(released()),
+			this,
+			SLOT(slStop())
 			);
 		Q_ASSERT_X(res, "dlgTest::initConnection", "issue connection with");
 	}
@@ -211,5 +229,21 @@ void dlgTest::slHasResult(double val)
 	QString str = QString("%1").arg(val);
 	QLineEdit *wgt = ui.wgtOutput;
 	wgt->setText(str);
+}
+
+void dlgTest::slStop()
+{
+	//auxDlg::MsgBox(this, "caption", "dlgTest::slStop");
+	//
+	if (solver_)
+	{
+		//
+		solver_->doStop();
+	}
+}
+
+void dlgTest::slStub()
+{
+	auxDlg::MsgBox(this, "slStub", "dlgTest::slStub");
 }
 

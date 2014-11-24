@@ -2,6 +2,8 @@
 #include "auxMayBe.h"
 #include "auxCalcCore.h"
 #include <functional>
+#include <memory>
+#include "threadpool.h"
 
 namespace core
 {
@@ -9,12 +11,7 @@ namespace core
 	{
 		struct auxThread
 		{
-			static int getOptimumThreadCount()
-			{
-				static const int stubValue=10;
-				//
-				return stubValue;
-			}
+			static int getOptimumThreadCount();
 		};
 	}
 	//
@@ -28,10 +25,12 @@ namespace core
 		}
 
 		double start();
+		void stop();
 		//double getResult();
 	private:
 	   auxCalcCore::pdoParam pdoParam_;
-	   int countThread_; 
+	   int countThread_;
+	   std::unique_ptr<ThreadPool> pThreadPool_;
 	};
 	//
 	struct Calculator
@@ -52,9 +51,11 @@ namespace core
 		}
 		//
 		void doCalc(core::callbackFunctor pFunc);
+		void doStop();
 	private:
 		monad::MayBe<auxCalcCore::pdoParam> pdoParam_;
 		monad::MayBe<int> countThread_;
+		std::unique_ptr<core::Integrator> pIntegrator_;
 		
 		void doAfterStop();
 	};

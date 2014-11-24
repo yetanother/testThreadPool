@@ -10,6 +10,9 @@ include($$auxProPath/yesQt.pro)
 include("_testProj.pro")
 TARGET = _testProj
 
+QT += widgets
+QT += core
+
 win32:
 {
 INCLUDEPATH +=	..\calcCore\include

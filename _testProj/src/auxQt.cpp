@@ -6,19 +6,21 @@
 
 bool auxQt::isGuiAvailable()
 {
-	QApplication::Type type = QApplication::type();
-	//
-	return (QApplication::GuiClient == type);
+	//QApplication::Type type = QApplication::type();
+	////
+	//return (QApplication::GuiClient == type);
+	static const bool stub = true;
+	return stub;
 }
 
 void auxQt::initCodec()
 {
 	QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-	QTextCodec::setCodecForCStrings(codec);
+	//QTextCodec::setCodecForCStrings(codec);
 	QTextCodec::setCodecForLocale(codec);
 	//
 	QTextCodec *codecTr = QTextCodec::codecForName("CP1251");
-	QTextCodec::setCodecForTr(codecTr);
+	//QTextCodec::setCodecForTr(codecTr);
 }
 
 const QLocale& auxQt::getProperLocale()
